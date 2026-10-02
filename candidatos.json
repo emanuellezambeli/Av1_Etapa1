@@ -2,35 +2,35 @@
   "PDC": [
     {
       "nome": "Superman",
-      "foto": "https://picsum.photos/seed/superman/150/150"
+      "foto": "https://upload.wikimedia.org/wikipedia/pt/b/be/Super-Homem.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
     },
     {
       "nome": "Batman",
-      "foto": "https://picsum.photos/seed/batman/150/150"
+      "foto": "https://dc.fandom.com/pt-br/wiki/Bruce_Wayne_%28Terra_Principal%29"
     },
     {
       "nome": "Mulher-Maravilha",
-      "foto": "https://picsum.photos/seed/wonderwoman/150/150"
+      "foto": "https://swimchannel.net/br/wp-content/uploads/2019/03/painelevamulhermaravilhagigante_1.jpg"
     },
     {
       "nome": "Flash",
-      "foto": "https://picsum.photos/seed/flash/150/150"
+      "foto": "https://hqrock.com.br/2013/12/07/flash-conheca-a-historia-do-maior-velocista-da-dc-comics/"
     },
     {
       "nome": "Lanterna Verde",
-      "foto": "https://picsum.photos/seed/greenlantern/150/150"
+      "foto": "https://upload.wikimedia.org/wikipedia/pt/8/83/Hal_Jordan_and_the_Green_Lantern_Corps_Vol_1_45_Textless_Variant.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
     },
     {
       "nome": "Aquaman",
-      "foto": "https://picsum.photos/seed/aquaman/150/150"
+      "foto": "https://leiturafilmica.com.br/wp-content/uploads/2018/12/aquaman-poster-filme.jpg"
     },
     {
       "nome": "Ciborgue",
-      "foto": "https://picsum.photos/seed/cyborg/150/150"
+      "foto": "https://static.wikia.nocookie.net/nerdologiaheroespowers/images/a/ac/Ciborgue_%28Nova_Terra%29.jpg/revision/latest?cb=20180824182106&path-prefix=pt-br"
     },
     {
       "nome": "Arqueiro Verde",
-      "foto": "https://picsum.photos/seed/greenarrow/150/150"
+      "foto": "https://static.wikia.nocookie.net/liberproeliis/images/c/c3/Arrow_Season_1.png/revision/latest?cb=20200601212242&path-prefix=pt-br"
     }
   ]
 }
