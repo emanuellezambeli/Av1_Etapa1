@@ -1,0 +1,36 @@
+{
+  "PDC": [
+    {
+      "nome": "Superman",
+      "foto": "https://picsum.photos/seed/superman/150/150"
+    },
+    {
+      "nome": "Batman",
+      "foto": "https://picsum.photos/seed/batman/150/150"
+    },
+    {
+      "nome": "Mulher-Maravilha",
+      "foto": "https://picsum.photos/seed/wonderwoman/150/150"
+    },
+    {
+      "nome": "Flash",
+      "foto": "https://picsum.photos/seed/flash/150/150"
+    },
+    {
+      "nome": "Lanterna Verde",
+      "foto": "https://picsum.photos/seed/greenlantern/150/150"
+    },
+    {
+      "nome": "Aquaman",
+      "foto": "https://picsum.photos/seed/aquaman/150/150"
+    },
+    {
+      "nome": "Ciborgue",
+      "foto": "https://picsum.photos/seed/cyborg/150/150"
+    },
+    {
+      "nome": "Arqueiro Verde",
+      "foto": "https://picsum.photos/seed/greenarrow/150/150"
+    }
+  ]
+}
