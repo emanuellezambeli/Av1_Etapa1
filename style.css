@@ -1,6 +1,6 @@
 body {
   font-family: "Comic Sans MS", "Arial Black", sans-serif;
-  background-color: #fff9c4; /* Fundo amarelado estilo papel jornal */
+  background-color: #fff9c4;
   margin: 20px;
   color: #000;
   border: 4px dashed #000;
@@ -10,9 +10,11 @@ body {
 h1,
 h3 {
   text-transform: uppercase;
+
   text-shadow:
     2px 2px 0px #ffeb3b,
     4px 4px 0px #000;
+
   letter-spacing: 1px;
 }
 
@@ -48,16 +50,25 @@ select {
   padding: 15px;
   width: 320px;
   background-color: #fff;
-  box-shadow: 6px 6px 0px #000; /* Sombra marcada estilo hachura de gibi */
-  border-radius: 0px; /* Bordas retas combinam mais com quadrinhos antigos */
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 0px;
 }
 
 .card-candidato img {
-  max-width: 100%;
-  height: auto;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+
   display: block;
+
   margin-top: 10px;
-  border: 2px solid #000;
+
+  border: 3px solid #000;
+}
+
+.foto-container {
+  display: flex;
+  justify-content: center;
 }
 
 .rules {
@@ -88,6 +99,7 @@ select {
   margin-top: 20px;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -119,4 +131,10 @@ button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+#msgFeedbackAcao {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
 }
