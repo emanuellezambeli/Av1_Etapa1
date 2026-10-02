@@ -6,17 +6,20 @@
     <title>Registro de Candidatos - PDC</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <h1>Registro de Candidatos - PDC (93)</h1>
 
     <div class="form-group">
       <label for="txtNumeroPartido">Número do Partido:</label>
+
       <input
         type="text"
         id="txtNumeroPartido"
         placeholder="Digite 93"
         onchange="processarPartido()"
       />
+
       <span id="msgErroPartido" class="erro"></span>
     </div>
 
@@ -27,6 +30,7 @@
 
     <div class="form-group">
       <label for="lstCandidatos">Candidato:</label>
+
       <select
         id="lstCandidatos"
         size="5"
@@ -36,6 +40,7 @@
 
     <div class="form-group">
       <label for="lstCargos">Cargo a Concorrer:</label>
+
       <select id="lstCargos" size="5">
         <option value="Presidente">Presidente</option>
         <option value="Governador(a)">Governador(a)</option>
@@ -47,7 +52,9 @@
 
     <div class="form-group">
       <label for="txtNumeroCandidato">Número do Candidato:</label>
-      <input type="text" id="txtNumeroCandidato" placeholder="Ex: 93XX" />
+
+      <input type="text" id="txtNumeroCandidato" placeholder="Ex: 9301" />
+
       <span class="rules">
         Regra PDC (93):<br />
         - Presidente: 93 + 2 dígitos (4 total)<br />
@@ -55,16 +62,29 @@
         - Governador(a) / Dep. Fed.: 93 + 4 dígitos (6 total)<br />
         - Dep. Estadual: 93 + 5 dígitos (7 total)
       </span>
+
       <span id="msgErroNumero" class="erro"></span>
     </div>
 
-    <!-- PAINEL ADICIONADO AQUI: É ele que desenha a foto e as infos na tela -->
     <div id="painelCandidato" class="card-candidato" style="display: none">
       <h3>Dados do Candidato</h3>
-      <p><b>Nome:</b> <span id="infoNome"></span></p>
-      <p><b>Cargo:</b> <span id="infoCargo"></span></p>
-      <p><b>Número:</b> <span id="infoNumero"></span></p>
-      <div>
+
+      <p>
+        <b>Nome:</b>
+        <span id="infoNome"></span>
+      </p>
+
+      <p>
+        <b>Cargo:</b>
+        <span id="infoCargo"></span>
+      </p>
+
+      <p>
+        <b>Número:</b>
+        <span id="infoNumero"></span>
+      </p>
+
+      <div class="foto-container">
         <img id="infoFoto" src="" alt="Foto do Candidato" />
       </div>
     </div>
@@ -77,10 +97,12 @@
       >
         Registrar
       </button>
+
       <button type="button" class="btn-success" onclick="gravarEEnviarTSE()">
         Enviar ao TSE
       </button>
     </div>
+
     <span id="msgFeedbackAcao"></span>
 
     <script src="script.js"></script>
