@@ -1,96 +1,234 @@
 let candidatos = [];
 
+// ===============================
+// CARREGAR CANDIDATOS
+// ===============================
+
 function carregarCandidatos() {
   fetch("candidatos.json")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Não foi possível carregar candidatos.json");
+      }
+
+      return response.json();
+    })
     .then((data) => {
       candidatos = data["PDC"] || [];
       preencherLista();
     })
-    .catch((error) =>
-      console.error("Erro ao carregar candidatos do PDC:", error),
-    );
+    .catch((error) => {
+      console.error("Erro ao carregar candidatos:", error);
+
+      document.getElementById("msgErroPartido").textContent =
+        "Erro ao carregar a lista de candidatos.";
+    });
 }
+
+// ===============================
+// PREENCHER LISTA
+// ===============================
 
 function preencherLista() {
   const lista = document.getElementById("lstCandidatos");
+
   lista.innerHTML = "";
+
   candidatos.forEach((candidato, indice) => {
     const option = document.createElement("option");
+
     option.value = indice;
     option.textContent = candidato.nome;
+
     lista.appendChild(option);
   });
 }
+
+// ===============================
+// PROCESSAR PARTIDO
+// ===============================
 
 function processarPartido() {
   const numeroPartido = document
     .getElementById("txtNumeroPartido")
     .value.trim();
+
   const msgErro = document.getElementById("msgErroPartido");
   const lista = document.getElementById("lstCandidatos");
+  const painel = document.getElementById("painelCandidato");
 
   msgErro.textContent = "";
+
   lista.innerHTML = "";
+
+  painel.style.display = "none";
 
   if (numeroPartido !== "93") {
     msgErro.textContent = "Partido inválido. O número do PDC é 93.";
+
     document.getElementById("lblNomePartido").innerHTML = "<b>---</b>";
-    document.getElementById("painelCandidato").style.display = "none";
+
     return;
   }
 
   document.getElementById("lblNomePartido").innerHTML = "<b>PDC</b>";
+
   carregarCandidatos();
 }
 
+// ===============================
+// SELECIONAR CANDIDATO
+// ===============================
+
 function selecionarCandidato() {
   const indice = document.getElementById("lstCandidatos").value;
+
   const candidato = candidatos[indice];
-  const cargo = document.getElementById("lstCargos").value || "";
-  const numeroCandidato = document
-    .getElementById("txtNumeroCandidato")
-    .value.trim();
-  const msgErroNumero = document.getElementById("msgErroNumero");
 
-  // Limpa mensagem de erro anterior
-  msgErroNumero.textContent = "";
-
-  // Valida o número de acordo com o cargo selecionado antes de exibir
-  if (!validarNumeroCandidato(numeroCandidato, cargo)) {
-    msgErroNumero.textContent =
-      "Número do candidato inválido para o cargo selecionado.";
-    document.getElementById("painelCandidato").style.display = "none";
+  if (!candidato) {
     return;
   }
 
-  if (!candidato) return;
+  const cargo = document.getElementById("lstCargos").value;
 
+  const numeroCandidato = document
+    .getElementById("txtNumeroCandidato")
+    .value.trim();
+
+  // Preenche informações
   document.getElementById("infoNome").textContent = candidato.nome;
+
   document.getElementById("infoCargo").textContent = cargo || "-";
+
   document.getElementById("infoNumero").textContent = numeroCandidato || "-";
 
-  // Atualiza a imagem corretamente
+  // ===============================
+  // CARREGAR FOTO
+  // ===============================
+
   const imgElement = document.getElementById("infoFoto");
+
   imgElement.src = candidato.foto;
   imgElement.alt = candidato.nome;
 
+  // Mostra erro caso a imagem não carregue
+  imgElement.onerror = function () {
+    console.error("Erro ao carregar imagem:", candidato.foto);
+
+    this.alt = "Imagem não encontrada";
+  };
+
+  imgElement.onload = function () {
+    console.log("Imagem carregada:", candidato.foto);
+  };
+
+  // Mostra painel
   document.getElementById("painelCandidato").style.display = "block";
 }
 
-// Função corrigida conforme as regras informadas no seu HTML (total de dígitos incluindo o 93)
+// ===============================
+// VALIDAR NÚMERO
+// ===============================
+
 function validarNumeroCandidato(numero, cargo) {
-  // Garante que o número começa com "93"
-  if (!numero.startsWith("93")) return false;
+  // Precisa começar com 93
+  if (!numero.startsWith("93")) {
+    return false;
+  }
 
-  if (cargo === "Presidente") return numero.length === 4; // 93 + 2 dígitos
+  // Apenas números
+  if (!/^\d+$/.test(numero)) {
+    return false;
+  }
 
-  if (cargo === "Senador(a)") return numero.length === 5; // 93 + 3 dígitos
+  if (cargo === "Presidente") {
+    return numero.length === 4;
+  }
 
-  if (cargo === "Governador(a)" || cargo === "Deputado(a) Federal")
-    return numero.length === 6; // 93 + 4 dígitos
+  if (cargo === "Senador(a)") {
+    return numero.length === 5;
+  }
 
-  if (cargo === "Deputado(a) Estadual") return numero.length === 7; // 93 + 5 dígitos
+  if (cargo === "Governador(a)" || cargo === "Deputado(a) Federal") {
+    return numero.length === 6;
+  }
+
+  if (cargo === "Deputado(a) Estadual") {
+    return numero.length === 7;
+  }
 
   return false;
 }
+
+// ===============================
+// REGISTRAR CANDIDATURA
+// ===============================
+
+function registrarCandidatura() {
+  const candidatoIndice = document.getElementById("lstCandidatos").value;
+
+  const candidato = candidatos[candidatoIndice];
+
+  const cargo = document.getElementById("lstCargos").value;
+
+  const numero = document.getElementById("txtNumeroCandidato").value.trim();
+
+  const msgErro = document.getElementById("msgErroNumero");
+
+  const feedback = document.getElementById("msgFeedbackAcao");
+
+  msgErro.textContent = "";
+  feedback.textContent = "";
+
+  if (!candidato) {
+    feedback.textContent = "Selecione um candidato.";
+
+    feedback.className = "erro";
+
+    return;
+  }
+
+  if (!validarNumeroCandidato(numero, cargo)) {
+    msgErro.textContent =
+      "Número do candidato inválido para o cargo selecionado.";
+
+    return;
+  }
+
+  // Atualiza o número mostrado
+  document.getElementById("infoNumero").textContent = numero;
+
+  feedback.textContent = "Candidatura registrada com sucesso!";
+
+  feedback.className = "sucesso";
+}
+
+// ===============================
+// ENVIAR AO TSE
+// ===============================
+
+function gravarEEnviarTSE() {
+  const feedback = document.getElementById("msgFeedbackAcao");
+
+  const candidatoIndice = document.getElementById("lstCandidatos").value;
+
+  const candidato = candidatos[candidatoIndice];
+
+  if (!candidato) {
+    feedback.textContent = "Selecione um candidato antes de enviar.";
+
+    feedback.className = "erro";
+
+    return;
+  }
+
+  feedback.textContent = "Dados preparados para envio ao TSE.";
+
+  feedback.className = "sucesso";
+}
+
+// ===============================
+// INICIALIZAÇÃO
+// ===============================
+
+console.log("Sistema PDC carregado.");
