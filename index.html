@@ -29,13 +29,9 @@
     </div>
 
     <div class="form-group">
-      <label for="lstCandidatos">Candidato:</label>
+      <label>Candidatos:</label>
 
-      <select
-        id="lstCandidatos"
-        size="5"
-        onchange="selecionarCandidato()"
-      ></select>
+      <div id="listaCandidatos" class="lista-candidatos"></div>
     </div>
 
     <div class="form-group">
@@ -53,7 +49,11 @@
     <div class="form-group">
       <label for="txtNumeroCandidato">Número do Candidato:</label>
 
-      <input type="text" id="txtNumeroCandidato" placeholder="Ex: 9301" />
+      <input
+        type="text"
+        id="txtNumeroCandidato"
+        placeholder="Ex: 9301"
+      />
 
       <span class="rules">
         Regra PDC (93):<br />
@@ -69,6 +69,10 @@
     <div id="painelCandidato" class="card-candidato" style="display: none">
       <h3>Dados do Candidato</h3>
 
+      <div class="foto-container">
+        <img id="infoFoto" src="" alt="Foto do Candidato" />
+      </div>
+
       <p>
         <b>Nome:</b>
         <span id="infoNome"></span>
@@ -83,10 +87,6 @@
         <b>Número:</b>
         <span id="infoNumero"></span>
       </p>
-
-      <div class="foto-container">
-        <img id="infoFoto" src="" alt="Foto do Candidato" />
-      </div>
     </div>
 
     <div class="actions">
@@ -98,8 +98,12 @@
         Registrar
       </button>
 
-      <button type="button" class="btn-success" onclick="gravarEEnviarTSE()">
-        Enviar ao TSE
+      <button
+        type="button"
+        class="btn-success"
+        onclick="gravarEEnviarTSE()"
+      >
+        Gerar JSON
       </button>
     </div>
 
