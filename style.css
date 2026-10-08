@@ -29,7 +29,7 @@ h3 {
 label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   font-size: 0.9em;
 }
@@ -42,6 +42,44 @@ select {
   border: 2px solid #000;
   font-weight: bold;
   background-color: #f0f0f0;
+}
+
+.lista-candidatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.candidato {
+  width: 130px;
+  padding: 10px;
+  background-color: #fff;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  cursor: pointer;
+  text-align: center;
+}
+
+.candidato:hover {
+  background-color: #ffeb3b;
+}
+
+.candidato.selecionado {
+  background-color: #29b6f6;
+}
+
+.candidato img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 3px solid #000;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.candidato p {
+  margin: 0;
+  font-weight: bold;
 }
 
 .card-candidato {
@@ -58,11 +96,8 @@ select {
   width: 150px;
   height: 150px;
   object-fit: cover;
-
   display: block;
-
-  margin-top: 10px;
-
+  margin: 10px auto;
   border: 3px solid #000;
 }
 
