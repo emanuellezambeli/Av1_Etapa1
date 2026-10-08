@@ -2,11 +2,11 @@
   "PDC": [
     {
       "nome": "Superman",
-      "foto": "https://upload.wikimedia.org/wikipedia/pt/b/be/Super-Homem.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
+      "foto": "https://upload.wikimedia.org/wikipedia/pt/b/be/Super-Homem.jpg"
     },
     {
       "nome": "Batman",
-      "foto": "https://dc.fandom.com/pt-br/wiki/Bruce_Wayne_%28Terra_Principal%29"
+      "foto": "https://upload.wikimedia.org/wikipedia/en/c/c7/Batman_Infobox.jpg"
     },
     {
       "nome": "Mulher-Maravilha",
@@ -14,7 +14,7 @@
     },
     {
       "nome": "Flash",
-      "foto": "https://hqrock.com.br/2013/12/07/flash-conheca-a-historia-do-maior-velocista-da-dc-comics/"
+      "foto": "https://static.wikia.nocookie.net/universo-estendido-dc-wikia/images/a/ae/The_Flash_DCEU.jpg/revision/latest?cb=20181213011329&path-prefix=pt-br"
     },
     {
       "nome": "Lanterna Verde",
