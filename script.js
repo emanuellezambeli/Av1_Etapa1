@@ -1,8 +1,6 @@
 let candidatos = [];
-
-// ===============================
-// CARREGAR CANDIDATOS
-// ===============================
+let candidatoSelecionado = null;
+let registros = [];
 
 function carregarCandidatos() {
   fetch("candidatos.json")
@@ -25,28 +23,28 @@ function carregarCandidatos() {
     });
 }
 
-// ===============================
-// PREENCHER LISTA
-// ===============================
-
 function preencherLista() {
-  const lista = document.getElementById("lstCandidatos");
+  const lista = document.getElementById("listaCandidatos");
 
   lista.innerHTML = "";
 
   candidatos.forEach((candidato, indice) => {
-    const option = document.createElement("option");
+    const card = document.createElement("div");
 
-    option.value = indice;
-    option.textContent = candidato.nome;
+    card.className = "candidato";
 
-    lista.appendChild(option);
+    card.innerHTML = `
+      <img src="${candidato.foto}" alt="${candidato.nome}">
+      <p>${candidato.nome}</p>
+    `;
+
+    card.onclick = function () {
+      selecionarCandidato(indice);
+    };
+
+    lista.appendChild(card);
   });
 }
-
-// ===============================
-// PROCESSAR PARTIDO
-// ===============================
 
 function processarPartido() {
   const numeroPartido = document
@@ -54,12 +52,9 @@ function processarPartido() {
     .value.trim();
 
   const msgErro = document.getElementById("msgErroPartido");
-  const lista = document.getElementById("lstCandidatos");
   const painel = document.getElementById("painelCandidato");
 
   msgErro.textContent = "";
-
-  lista.innerHTML = "";
 
   painel.style.display = "none";
 
@@ -67,6 +62,8 @@ function processarPartido() {
     msgErro.textContent = "Partido inválido. O número do PDC é 93.";
 
     document.getElementById("lblNomePartido").innerHTML = "<b>---</b>";
+
+    document.getElementById("listaCandidatos").innerHTML = "";
 
     return;
   }
@@ -76,18 +73,22 @@ function processarPartido() {
   carregarCandidatos();
 }
 
-// ===============================
-// SELECIONAR CANDIDATO
-// ===============================
-
-function selecionarCandidato() {
-  const indice = document.getElementById("lstCandidatos").value;
-
+function selecionarCandidato(indice) {
   const candidato = candidatos[indice];
 
   if (!candidato) {
     return;
   }
+
+  candidatoSelecionado = candidato;
+
+  const cards = document.querySelectorAll(".candidato");
+
+  cards.forEach((card) => {
+    card.classList.remove("selecionado");
+  });
+
+  cards[indice].classList.add("selecionado");
 
   const cargo = document.getElementById("lstCargos").value;
 
@@ -95,48 +96,27 @@ function selecionarCandidato() {
     .getElementById("txtNumeroCandidato")
     .value.trim();
 
-  // Preenche informações
   document.getElementById("infoNome").textContent = candidato.nome;
 
   document.getElementById("infoCargo").textContent = cargo || "-";
 
-  document.getElementById("infoNumero").textContent = numeroCandidato || "-";
-
-  // ===============================
-  // CARREGAR FOTO
-  // ===============================
+  document.getElementById("infoNumero").textContent =
+    numeroCandidato || "-";
 
   const imgElement = document.getElementById("infoFoto");
 
   imgElement.src = candidato.foto;
+
   imgElement.alt = candidato.nome;
 
-  // Mostra erro caso a imagem não carregue
-  imgElement.onerror = function () {
-    console.error("Erro ao carregar imagem:", candidato.foto);
-
-    this.alt = "Imagem não encontrada";
-  };
-
-  imgElement.onload = function () {
-    console.log("Imagem carregada:", candidato.foto);
-  };
-
-  // Mostra painel
   document.getElementById("painelCandidato").style.display = "block";
 }
 
-// ===============================
-// VALIDAR NÚMERO
-// ===============================
-
 function validarNumeroCandidato(numero, cargo) {
-  // Precisa começar com 93
   if (!numero.startsWith("93")) {
     return false;
   }
 
-  // Apenas números
   if (!/^\d+$/.test(numero)) {
     return false;
   }
@@ -149,7 +129,10 @@ function validarNumeroCandidato(numero, cargo) {
     return numero.length === 5;
   }
 
-  if (cargo === "Governador(a)" || cargo === "Deputado(a) Federal") {
+  if (
+    cargo === "Governador(a)" ||
+    cargo === "Deputado(a) Federal"
+  ) {
     return numero.length === 6;
   }
 
@@ -160,27 +143,22 @@ function validarNumeroCandidato(numero, cargo) {
   return false;
 }
 
-// ===============================
-// REGISTRAR CANDIDATURA
-// ===============================
-
 function registrarCandidatura() {
-  const candidatoIndice = document.getElementById("lstCandidatos").value;
-
-  const candidato = candidatos[candidatoIndice];
-
   const cargo = document.getElementById("lstCargos").value;
 
-  const numero = document.getElementById("txtNumeroCandidato").value.trim();
+  const numero = document
+    .getElementById("txtNumeroCandidato")
+    .value.trim();
 
   const msgErro = document.getElementById("msgErroNumero");
 
   const feedback = document.getElementById("msgFeedbackAcao");
 
   msgErro.textContent = "";
+
   feedback.textContent = "";
 
-  if (!candidato) {
+  if (!candidatoSelecionado) {
     feedback.textContent = "Selecione um candidato.";
 
     feedback.className = "erro";
@@ -195,40 +173,57 @@ function registrarCandidatura() {
     return;
   }
 
-  // Atualiza o número mostrado
+  const registro = {
+    nome: candidatoSelecionado.nome,
+    cargo: cargo,
+    numero: numero
+  };
+
+  registros.push(registro);
+
   document.getElementById("infoNumero").textContent = numero;
 
-  feedback.textContent = "Candidatura registrada com sucesso!";
+  feedback.textContent =
+    "Candidatura registrada com sucesso!";
 
   feedback.className = "sucesso";
-}
 
-// ===============================
-// ENVIAR AO TSE
-// ===============================
+  console.log(registros);
+}
 
 function gravarEEnviarTSE() {
   const feedback = document.getElementById("msgFeedbackAcao");
 
-  const candidatoIndice = document.getElementById("lstCandidatos").value;
-
-  const candidato = candidatos[candidatoIndice];
-
-  if (!candidato) {
-    feedback.textContent = "Selecione um candidato antes de enviar.";
+  if (registros.length === 0) {
+    feedback.textContent =
+      "Registre pelo menos uma candidatura antes de gerar o JSON.";
 
     feedback.className = "erro";
 
     return;
   }
 
-  feedback.textContent = "Dados preparados para envio ao TSE.";
+  const dadosJSON = JSON.stringify(registros, null, 2);
+
+  const arquivo = new Blob(
+    [dadosJSON],
+    { type: "application/json" }
+  );
+
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(arquivo);
+
+  link.download = "votacao.json";
+
+  link.click();
+
+  URL.revokeObjectURL(link.href);
+
+  feedback.textContent =
+    "Arquivo votacao.json gerado com sucesso!";
 
   feedback.className = "sucesso";
 }
-
-// ===============================
-// INICIALIZAÇÃO
-// ===============================
 
 console.log("Sistema PDC carregado.");
